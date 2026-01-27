@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { CategoryData } from '../types';
+import { CategoryData } from '../types.ts';
 
 interface Props {
   data: CategoryData[];

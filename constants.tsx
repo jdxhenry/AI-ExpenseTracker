@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Category, Transaction, TransactionType } from './types';
+import { Category, Transaction, TransactionType } from './types.ts';
 import { 
   Home, 
   ShoppingCart, 
@@ -35,7 +35,7 @@ export const CATEGORY_METADATA: Record<Category, { color: string; icon: React.Re
   [Category.Freelance]: { color: '#5856D6', icon: <Briefcase size={18} /> },
   [Category.Investments]: { color: '#AF52DE', icon: <TrendingUp size={18} /> },
   [Category.Gift]: { color: '#FF2D55', icon: <Gift size={18} /> },
-  [Category.OtherIncome]: { color: '#8E8E93', icon: <Coins size={18} /> },
+  [Category.OtherIncome]: { color: '#8E8E8E', icon: <Coins size={18} /> },
 };
 
 export const CATEGORY_TAGS: Partial<Record<Category, string[]>> = {

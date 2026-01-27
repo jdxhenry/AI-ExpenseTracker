@@ -18,9 +18,9 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import { Category, CategoryData, Transaction, TransactionType, Currency } from './types';
-import { CATEGORY_METADATA, CATEGORY_TAGS, MOCK_EXPENSES } from './constants';
-import RadialExpenseChart from './components/RadialExpenseChart';
+import { Category, CategoryData, Transaction, TransactionType, Currency } from './types.ts';
+import { CATEGORY_METADATA, CATEGORY_TAGS, MOCK_EXPENSES } from './constants.tsx';
+import RadialExpenseChart from './components/RadialExpenseChart.tsx';
 
 const CURRENCY_SYMBOLS: Record<Currency, string> = {
   [Currency.USD]: '$',
