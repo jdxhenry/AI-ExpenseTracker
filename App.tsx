@@ -494,7 +494,7 @@ const App: React.FC = () => {
                 <button onClick={() => setConfirmModal({ isOpen: true, title: 'Clear Data?', message: 'Delete all records?', onConfirm: () => {setTransactions([]); setConfirmModal(null);}, isDestructive: true })} className="w-full flex items-center gap-4 p-5 text-left active:bg-gray-50">
                   <Trash2 className="text-red-700" size={20} />
                   <div>
-                    <p className="text-sm font-bold text-red-700">Delete All Data</p>
+                    <p className="text-sm font-bold text-red-700">Reset All Data</p>
                     <p className="text-xs text-gray-600">Irreversible action.</p>
                   </div>
                 </button>
@@ -530,7 +530,7 @@ const App: React.FC = () => {
 
         <button className="flex flex-col items-center gap-1 flex-1 text-gray-500">
           <Wallet size={24} />
-          <span className="text-[10px] font-bold">Payments</span>
+          <span className="text-[10px] font-bold">Subscriptions</span>
         </button>
         <button onClick={() => setActiveTab('settings')} className={`flex flex-col items-center gap-1 flex-1 ${activeTab === 'settings' ? 'text-blue-700' : 'text-gray-500'}`}>
           <Settings size={24} strokeWidth={activeTab === 'settings' ? 2.5 : 2} />
