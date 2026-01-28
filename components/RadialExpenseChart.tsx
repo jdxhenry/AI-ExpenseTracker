@@ -24,7 +24,13 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       const height = 400;
       const g = svg.append('g').attr('transform', `translate(${width / 2}, ${height / 2})`);
       g.append('circle').attr('r', 100).attr('fill', '#f3f4f6');
-      g.append('text').attr('text-anchor', 'middle').attr('dy', '0.35em').style('font-size', '14px').style('fill', '#9ca3af').text('No Data');
+      g.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '0.35em')
+        .style('font-size', '14px')
+        .style('font-weight', '600')
+        .style('fill', '#4b5563')
+        .text('No Data');
       return;
     }
 
@@ -58,6 +64,7 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       .style('filter', 'drop-shadow(0px 2px 4px rgba(0,0,0,0.05))');
 
     // Percentages inside the segments (only if large enough)
+    // Using a subtle shadow for contrast on very light segments
     arcs.append('text')
       .attr('transform', d => `translate(${arc.centroid(d)})`)
       .attr('dy', '0.35em')
@@ -65,6 +72,7 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       .attr('fill', 'white')
       .style('font-size', '12px')
       .style('font-weight', '700')
+      .style('text-shadow', '0px 1px 2px rgba(0,0,0,0.4)')
       .text(d => d.data.percentage > 7 ? `${Math.round(d.data.percentage)}%` : '');
 
     // Middle Circle: White center with shadow
@@ -78,9 +86,9 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
     
     central.append('text')
       .attr('dy', '-0.5em')
-      .style('font-size', '12px')
+      .style('font-size', '13px')
       .style('font-weight', '600')
-      .style('fill', '#8E8E93')
+      .style('fill', '#636366') // Darker gray for better contrast
       .text('Total Spent');
     
     central.append('text')
@@ -94,7 +102,7 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       .attr('dy', '3em')
       .style('font-size', '11px')
       .style('font-weight', '700')
-      .style('fill', '#3b82f6')
+      .style('fill', '#2563eb') // Darker blue for contrast
       .text(`${data.length} Categories`);
 
   }, [data, totalSpent, currencySymbol]);
@@ -107,6 +115,8 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
         height="400" 
         viewBox="0 0 400 400"
         className="max-w-full h-auto"
+        aria-label="Radial budget breakdown chart"
+        role="img"
       />
     </div>
   );

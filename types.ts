@@ -49,6 +49,11 @@ export interface CategoryData {
   icon: string;
 }
 
+export interface Budget {
+  category: Category;
+  limit: number;
+}
+
 export interface BudgetStats {
   totalSpent: number;
   budgetLimit: number;
