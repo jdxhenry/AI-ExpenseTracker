@@ -7,9 +7,10 @@ interface Props {
   data: CategoryData[];
   totalSpent: number;
   currencySymbol: string;
+  theme: 'light' | 'dark';
 }
 
-const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol }) => {
+const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol, theme }) => {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -18,15 +19,17 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
 
-    // Use a fixed internal coordinate system for D3 calculations
-    // The SVG viewBox will handle the actual scaling to the container
     const width = 400;
     const height = 400;
     
+    const isDark = theme === 'dark';
+    const primaryTextColor = isDark ? '#FFFFFF' : '#1C1C1E';
+    const secondaryTextColor = isDark ? '#8E8E93' : '#8E8E93';
+    const centerCircleColor = isDark ? '#1C1C1E' : '#FFFFFF';
+
     if (data.length === 0) {
-      // Empty state visualization
       const g = svg.append('g').attr('transform', `translate(${width / 2}, ${height / 2})`);
-      g.append('circle').attr('r', 100).attr('fill', '#f3f4f6');
+      g.append('circle').attr('r', 100).attr('fill', isDark ? '#2C2C2E' : '#f3f4f6');
       g.append('text')
         .attr('text-anchor', 'middle')
         .attr('dy', '0.35em')
@@ -37,9 +40,8 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       return;
     }
 
-    // Increased radius slightly to utilize more of the available viewbox area
     const radius = Math.min(width, height) / 2.05; 
-    const innerRadius = radius * 0.58; // Slightly larger center for readability on mobile
+    const innerRadius = radius * 0.58;
 
     const g = svg.append('g')
       .attr('transform', `translate(${width / 2}, ${height / 2})`);
@@ -51,7 +53,7 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
     const arc = d3.arc<d3.PieArcDatum<CategoryData>>()
       .innerRadius(innerRadius)
       .outerRadius(radius)
-      .padAngle(0.02); // Slightly wider padding for a cleaner "iOS" look
+      .padAngle(0.02);
 
     const arcs = g.selectAll('.arc')
       .data(pie(data))
@@ -59,13 +61,11 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       .append('g')
       .attr('class', 'arc');
 
-    // Colored Segments with subtle shadow
     arcs.append('path')
       .attr('d', arc)
       .attr('fill', d => d.data.color)
-      .style('filter', 'drop-shadow(0px 3px 6px rgba(0,0,0,0.1))');
+      .style('filter', isDark ? 'none' : 'drop-shadow(0px 3px 6px rgba(0,0,0,0.1))');
 
-    // Labels: Only show percentage if the segment is large enough to prevent clutter
     arcs.append('text')
       .attr('transform', d => `translate(${arc.centroid(d)})`)
       .attr('dy', '0.35em')
@@ -77,27 +77,25 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       .style('pointer-events', 'none')
       .text(d => d.data.percentage > 8 ? `${Math.round(d.data.percentage)}%` : '');
 
-    // Middle Circle: Clean white center
     g.append('circle')
       .attr('r', innerRadius - 2)
-      .attr('fill', 'white')
-      .style('filter', 'drop-shadow(0px 4px 15px rgba(0,0,0,0.06))');
+      .attr('fill', centerCircleColor)
+      .style('filter', isDark ? 'none' : 'drop-shadow(0px 4px 15px rgba(0,0,0,0.06))');
 
-    // Central Summary Text
     const central = g.append('g').attr('text-anchor', 'middle');
     
     central.append('text')
       .attr('dy', '-0.6em')
       .style('font-size', '14px')
       .style('font-weight', '600')
-      .style('fill', '#8E8E93') // iOS Secondary Label Color
+      .style('fill', secondaryTextColor)
       .text('Total Spent');
     
     central.append('text')
       .attr('dy', '0.7em')
       .style('font-size', '28px')
       .style('font-weight', '900')
-      .style('fill', '#1C1C1E') // iOS Primary Label Color
+      .style('fill', primaryTextColor)
       .style('letter-spacing', '-0.5px')
       .text(`${currencySymbol}${Math.round(totalSpent).toLocaleString()}`);
 
@@ -105,10 +103,10 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       .attr('dy', '3.2em')
       .style('font-size', '12px')
       .style('font-weight', '700')
-      .style('fill', '#007AFF') // iOS Blue
+      .style('fill', '#007AFF')
       .text(`${data.length} categories active`);
 
-  }, [data, totalSpent, currencySymbol]);
+  }, [data, totalSpent, currencySymbol, theme]);
 
   return (
     <div className="flex justify-center items-center w-full aspect-square max-w-[400px] mx-auto overflow-hidden p-2 sm:p-4">
