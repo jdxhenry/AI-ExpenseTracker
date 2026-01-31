@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Category, Transaction, TransactionType } from './types.ts';
+import { Category, Transaction, TransactionType, BillingCycle } from './types.ts';
 import { 
   Home, 
   ShoppingCart, 
@@ -56,6 +56,18 @@ export const CATEGORY_TAGS: Partial<Record<Category, string[]>> = {
   [Category.Gift]: ['Birthday', 'Holiday', 'Red Envelope'],
   [Category.OtherIncome]: ['Sold Item', 'Refund', 'Tax Return'],
 };
+
+export const QUICK_ADD_SUBSCRIPTIONS = [
+  { name: 'Netflix', amount: 15.99, color: '#E50914', icon: 'N', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png' },
+  { name: 'Disney+', amount: 7.99, color: '#006E99', icon: 'D+', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/100px-Disney%2B_logo.svg.png' },
+  { name: 'Amazon Prime', amount: 14.99, color: '#FF9900', icon: 'AP', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg' },
+  { name: 'Spotify', amount: 9.99, color: '#1DB954', icon: 'S', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg' },
+  { name: 'YouTube Prem...', amount: 11.99, color: '#FF0000', icon: 'YT', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png' },
+  { name: 'Apple Music', amount: 10.99, color: '#FB233B', icon: 'AM', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Apple_Music_logo.svg' },
+  { name: 'ChatGPT Plus', amount: 20.00, color: '#10a37f', icon: 'GPT', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg' },
+  { name: 'iCloud+', amount: 0.99, color: '#007AFF', icon: 'iC', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/ICloud_icon.svg' },
+  { name: 'Adobe CC', amount: 54.99, color: '#FF0000', icon: 'CC', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Creative_Cloud_logo_2020.svg' },
+];
 
 export const MOCK_EXPENSES: Transaction[] = [
   { id: '0', amount: 5000, category: Category.Salary, date: new Date(), note: 'Monthly Salary', type: TransactionType.Income },

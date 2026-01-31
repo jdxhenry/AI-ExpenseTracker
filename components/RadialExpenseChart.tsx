@@ -18,26 +18,28 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
 
+    // Use a fixed internal coordinate system for D3 calculations
+    // The SVG viewBox will handle the actual scaling to the container
+    const width = 400;
+    const height = 400;
+    
     if (data.length === 0) {
       // Empty state visualization
-      const width = 400;
-      const height = 400;
       const g = svg.append('g').attr('transform', `translate(${width / 2}, ${height / 2})`);
       g.append('circle').attr('r', 100).attr('fill', '#f3f4f6');
       g.append('text')
         .attr('text-anchor', 'middle')
         .attr('dy', '0.35em')
-        .style('font-size', '14px')
+        .style('font-size', '16px')
         .style('font-weight', '600')
-        .style('fill', '#4b5563')
-        .text('No Data');
+        .style('fill', '#9ca3af')
+        .text('No activity yet');
       return;
     }
 
-    const width = 400;
-    const height = 400;
-    const radius = Math.min(width, height) / 2.2;
-    const innerRadius = radius * 0.55;
+    // Increased radius slightly to utilize more of the available viewbox area
+    const radius = Math.min(width, height) / 2.05; 
+    const innerRadius = radius * 0.58; // Slightly larger center for readability on mobile
 
     const g = svg.append('g')
       .attr('transform', `translate(${width / 2}, ${height / 2})`);
@@ -49,7 +51,7 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
     const arc = d3.arc<d3.PieArcDatum<CategoryData>>()
       .innerRadius(innerRadius)
       .outerRadius(radius)
-      .padAngle(0.015);
+      .padAngle(0.02); // Slightly wider padding for a cleaner "iOS" look
 
     const arcs = g.selectAll('.arc')
       .data(pie(data))
@@ -57,66 +59,66 @@ const RadialExpenseChart: React.FC<Props> = ({ data, totalSpent, currencySymbol 
       .append('g')
       .attr('class', 'arc');
 
-    // Colored Segments
+    // Colored Segments with subtle shadow
     arcs.append('path')
       .attr('d', arc)
       .attr('fill', d => d.data.color)
-      .style('filter', 'drop-shadow(0px 2px 4px rgba(0,0,0,0.05))');
+      .style('filter', 'drop-shadow(0px 3px 6px rgba(0,0,0,0.1))');
 
-    // Percentages inside the segments (only if large enough)
-    // Using a subtle shadow for contrast on very light segments
+    // Labels: Only show percentage if the segment is large enough to prevent clutter
     arcs.append('text')
       .attr('transform', d => `translate(${arc.centroid(d)})`)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'middle')
       .attr('fill', 'white')
-      .style('font-size', '12px')
-      .style('font-weight', '700')
-      .style('text-shadow', '0px 1px 2px rgba(0,0,0,0.4)')
-      .text(d => d.data.percentage > 7 ? `${Math.round(d.data.percentage)}%` : '');
+      .style('font-size', '13px')
+      .style('font-weight', '800')
+      .style('text-shadow', '0px 1px 3px rgba(0,0,0,0.5)')
+      .style('pointer-events', 'none')
+      .text(d => d.data.percentage > 8 ? `${Math.round(d.data.percentage)}%` : '');
 
-    // Middle Circle: White center with shadow
+    // Middle Circle: Clean white center
     g.append('circle')
-      .attr('r', innerRadius)
+      .attr('r', innerRadius - 2)
       .attr('fill', 'white')
-      .style('filter', 'drop-shadow(0px 4px 12px rgba(0,0,0,0.08))');
+      .style('filter', 'drop-shadow(0px 4px 15px rgba(0,0,0,0.06))');
 
-    // Central Text
+    // Central Summary Text
     const central = g.append('g').attr('text-anchor', 'middle');
     
     central.append('text')
-      .attr('dy', '-0.5em')
-      .style('font-size', '13px')
+      .attr('dy', '-0.6em')
+      .style('font-size', '14px')
       .style('font-weight', '600')
-      .style('fill', '#636366') // Darker gray for better contrast
+      .style('fill', '#8E8E93') // iOS Secondary Label Color
       .text('Total Spent');
     
     central.append('text')
-      .attr('dy', '0.8em')
-      .style('font-size', '24px')
-      .style('font-weight', '800')
-      .style('fill', '#1C1C1E')
+      .attr('dy', '0.7em')
+      .style('font-size', '28px')
+      .style('font-weight', '900')
+      .style('fill', '#1C1C1E') // iOS Primary Label Color
+      .style('letter-spacing', '-0.5px')
       .text(`${currencySymbol}${Math.round(totalSpent).toLocaleString()}`);
 
     central.append('text')
-      .attr('dy', '3em')
-      .style('font-size', '11px')
+      .attr('dy', '3.2em')
+      .style('font-size', '12px')
       .style('font-weight', '700')
-      .style('fill', '#2563eb') // Darker blue for contrast
-      .text(`${data.length} Categories`);
+      .style('fill', '#007AFF') // iOS Blue
+      .text(`${data.length} categories active`);
 
   }, [data, totalSpent, currencySymbol]);
 
   return (
-    <div className="flex justify-center items-center w-full overflow-hidden p-6">
+    <div className="flex justify-center items-center w-full aspect-square max-w-[400px] mx-auto overflow-hidden p-2 sm:p-4">
       <svg 
         ref={svgRef} 
-        width="400" 
-        height="400" 
         viewBox="0 0 400 400"
-        className="max-w-full h-auto"
+        className="w-full h-full"
         aria-label="Radial budget breakdown chart"
         role="img"
+        preserveAspectRatio="xMidYMid meet"
       />
     </div>
   );

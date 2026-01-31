@@ -32,6 +32,11 @@ export enum Category {
   OtherIncome = 'Other Income'
 }
 
+export enum BillingCycle {
+  Monthly = 'Monthly',
+  Yearly = 'Yearly'
+}
+
 export interface Transaction {
   id: string;
   amount: number;
@@ -39,6 +44,18 @@ export interface Transaction {
   date: Date;
   note: string;
   type: TransactionType;
+}
+
+export interface Subscription {
+  id: string;
+  name: string;
+  amount: number;
+  billingCycle: BillingCycle;
+  nextBillingDate: string;
+  iconUrl: string;
+  alertEnabled: boolean;
+  alertLeadDays: number; // 0 for same day, 3 for 3 days before, 5 for 5 days before
+  category: Category;
 }
 
 export interface CategoryData {
