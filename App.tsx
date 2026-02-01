@@ -223,7 +223,7 @@ const App: React.FC = () => {
       id: 'sub-' + Date.now(),
       name: subForm.name,
       amount: subForm.amount,
-      billingCycle: subForm.billingCycle || BillingCycle.Monthly,
+      billingCycle: BillingCycle.Monthly,
       nextBillingDate: subForm.nextBillingDate || new Date().toISOString().split('T')[0],
       iconUrl: subForm.iconUrl || '',
       alertEnabled: subForm.alertEnabled ?? true,
@@ -322,7 +322,7 @@ const App: React.FC = () => {
 
   // Style helper
   const textPrimary = isDark ? 'text-white' : 'text-[#1C1C1E]';
-  const textSecondary = isDark ? 'text-[#8E8E93]' : 'text-gray-600';
+  const textSecondary = isDark ? 'text-[#8E8E93]' : 'text-gray-400';
   const bgMain = isDark ? 'bg-[#121212]' : 'bg-[#F2F2F7]';
   const bgCard = isDark ? 'bg-[#1C1C1E]' : 'bg-white';
   const borderCard = isDark ? 'border-[#2C2C2E]' : 'border-gray-100';
@@ -343,25 +343,19 @@ const App: React.FC = () => {
                <div className={`flex w-[200%] h-full transition-transform duration-500 ease-out transform ${overviewSubView === 'history' ? '-translate-x-1/2' : 'translate-x-0'}`}>
                  <div className="w-1/2 h-full overflow-y-auto px-4 pb-32 space-y-6 no-scrollbar">
                     
-                    {/* Summary Cards */}
-                    <div className="grid grid-cols-2 gap-3 px-2">
-                      <div className={`${bgCard} p-4 rounded-3xl border ${borderCard} flex flex-col items-center justify-center col-span-2 shadow-sm`}>
-                        <p className={`text-[10px] font-black ${textSecondary} uppercase tracking-widest mb-1`}>Total Balance</p>
-                        <p className={`text-3xl font-black ${textPrimary} ${stats.balance < 0 ? 'text-red-500' : ''}`}>{formatCurrency(stats.balance)}</p>
+                    {/* Summary Cards Row */}
+                    <div className="grid grid-cols-3 gap-2 px-2">
+                      <div className={`${bgCard} py-4 px-1 rounded-2xl border ${borderCard} flex flex-col items-center justify-center shadow-sm text-center`}>
+                        <p className={`text-[11px] font-semibold ${textSecondary} mb-1`}>Income</p>
+                        <p className={`text-[15px] font-black text-green-600 truncate w-full`}>{formatCurrency(stats.totalIncome)}</p>
                       </div>
-                      <div className={`${bgCard} p-4 rounded-3xl border ${borderCard} flex items-center gap-3 shadow-sm`}>
-                        <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500"><ArrowUpCircle size={20} /></div>
-                        <div>
-                          <p className={`text-[9px] font-black ${textSecondary} uppercase tracking-widest`}>Income</p>
-                          <p className={`text-sm font-bold ${textPrimary}`}>{formatCurrency(stats.totalIncome)}</p>
-                        </div>
+                      <div className={`${bgCard} py-4 px-1 rounded-2xl border ${borderCard} flex flex-col items-center justify-center shadow-sm text-center`}>
+                        <p className={`text-[11px] font-semibold ${textSecondary} mb-1`}>Expense</p>
+                        <p className={`text-[15px] font-black text-red-500 truncate w-full`}>{formatCurrency(stats.totalSpent)}</p>
                       </div>
-                      <div className={`${bgCard} p-4 rounded-3xl border ${borderCard} flex items-center gap-3 shadow-sm`}>
-                        <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center text-red-500"><ArrowDownCircle size={20} /></div>
-                        <div>
-                          <p className={`text-[9px] font-black ${textSecondary} uppercase tracking-widest`}>Expense</p>
-                          <p className={`text-sm font-bold ${textPrimary}`}>{formatCurrency(stats.totalSpent)}</p>
-                        </div>
+                      <div className={`${bgCard} py-4 px-1 rounded-2xl border ${borderCard} flex flex-col items-center justify-center shadow-sm text-center`}>
+                        <p className={`text-[11px] font-semibold ${textSecondary} mb-1`}>Balance</p>
+                        <p className={`text-[15px] font-black text-blue-500 truncate w-full`}>{formatCurrency(stats.balance)}</p>
                       </div>
                     </div>
 
