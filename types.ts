@@ -1,7 +1,13 @@
-
 export enum TransactionType {
   Income = 'income',
   Expense = 'expense'
+}
+
+export enum PaymentType {
+  UPI = 'UPI',
+  DebitCard = 'Debit Card',
+  CreditCard = 'Credit Card',
+  NetBanking = 'Net Banking'
 }
 
 export enum Currency {
@@ -34,6 +40,7 @@ export enum Category {
 
 export enum BillingCycle {
   Monthly = 'Monthly',
+  Quarterly = '3 Months',
   Yearly = 'Yearly'
 }
 
@@ -44,6 +51,7 @@ export interface Transaction {
   date: Date;
   note: string;
   type: TransactionType;
+  paymentType: PaymentType;
 }
 
 export interface Subscription {
@@ -54,7 +62,7 @@ export interface Subscription {
   nextBillingDate: string;
   iconUrl: string;
   alertEnabled: boolean;
-  alertLeadDays: number; // 0 for same day, 3 for 3 days before, 5 for 5 days before
+  alertLeadDays: number;
   category: Category;
 }
 
@@ -67,6 +75,8 @@ export interface CategoryData {
 }
 
 export interface Budget {
+  id: string;
+  name?: string;
   category: Category;
   limit: number;
 }

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Category, Transaction, TransactionType, BillingCycle } from './types.ts';
+import { Category, Transaction, TransactionType, BillingCycle, PaymentType } from './types.ts';
 import { 
   Home, 
   ShoppingCart, 
@@ -70,15 +70,15 @@ export const QUICK_ADD_SUBSCRIPTIONS = [
 ];
 
 export const MOCK_EXPENSES: Transaction[] = [
-  { id: '0', amount: 5000, category: Category.Salary, date: new Date(), note: 'Monthly Salary', type: TransactionType.Income },
-  { id: '1', amount: 850, category: Category.Housing, date: new Date(), note: 'Rent', type: TransactionType.Expense },
-  { id: '2', amount: 620, category: Category.Food, date: new Date(), note: 'Weekly Groceries', type: TransactionType.Expense },
-  { id: '3', amount: 610, category: Category.Finance, date: new Date(), note: 'Credit Card Pay', type: TransactionType.Expense },
-  { id: '4', amount: 380, category: Category.Travel, date: new Date(), note: 'Hotel Booking', type: TransactionType.Expense },
-  { id: '5', amount: 320, category: Category.Lifestyle, date: new Date(), note: 'New Clothes', type: TransactionType.Expense },
-  { id: '6', amount: 250, category: Category.Health, date: new Date(), note: 'Pharmacy', type: TransactionType.Expense },
-  { id: '7', amount: 240, category: Category.Education, date: new Date(), note: 'Online Course', type: TransactionType.Expense },
-  { id: '8', amount: 190, category: Category.Transport, date: new Date(), note: 'Gas', type: TransactionType.Expense },
-  { id: '9', amount: 180, category: Category.Family, date: new Date(), note: 'Dinner', type: TransactionType.Expense },
-  { id: '10', amount: 150, category: Category.Entertainment, date: new Date(), note: 'Cinema', type: TransactionType.Expense },
+  { id: '0', amount: 5000, category: Category.Salary, date: new Date(), note: 'Monthly Salary', type: TransactionType.Income, paymentType: PaymentType.NetBanking },
+  { id: '1', amount: 850, category: Category.Housing, date: new Date(), note: 'Rent', type: TransactionType.Expense, paymentType: PaymentType.NetBanking },
+  { id: '2', amount: 620, category: Category.Food, date: new Date(), note: 'Weekly Groceries', type: TransactionType.Expense, paymentType: PaymentType.UPI },
+  { id: '3', amount: 610, category: Category.Finance, date: new Date(), note: 'Credit Card Pay', type: TransactionType.Expense, paymentType: PaymentType.NetBanking },
+  { id: '4', amount: 380, category: Category.Travel, date: new Date(), note: 'Hotel Booking', type: TransactionType.Expense, paymentType: PaymentType.CreditCard },
+  { id: '5', amount: 320, category: Category.Lifestyle, date: new Date(), note: 'New Clothes', type: TransactionType.Expense, paymentType: PaymentType.DebitCard },
+  { id: '6', amount: 250, category: Category.Health, date: new Date(), note: 'Pharmacy', type: TransactionType.Expense, paymentType: PaymentType.UPI },
+  { id: '7', amount: 240, category: Category.Education, date: new Date(), note: 'Online Course', type: TransactionType.Expense, paymentType: PaymentType.CreditCard },
+  { id: '8', amount: 190, category: Category.Transport, date: new Date(), note: 'Gas', type: TransactionType.Expense, paymentType: PaymentType.UPI },
+  { id: '9', amount: 180, category: Category.Family, date: new Date(), note: 'Dinner', type: TransactionType.Expense, paymentType: PaymentType.DebitCard },
+  { id: '10', amount: 150, category: Category.Entertainment, date: new Date(), note: 'Cinema', type: TransactionType.Expense, paymentType: PaymentType.UPI },
 ];
